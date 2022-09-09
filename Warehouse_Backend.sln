@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{B1105690-41B6-4A18-81B4-C41611D8B112}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderReceive", "OrderReceive\OrderReceive.csproj", "{C24D8FB8-30FE-429F-A415-0F19E7633DFA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QCService", "QCService\QCService.csproj", "{E8B01579-25D7-4420-9E5C-23058900CFB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C24D8FB8-30FE-429F-A415-0F19E7633DFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C24D8FB8-30FE-429F-A415-0F19E7633DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C24D8FB8-30FE-429F-A415-0F19E7633DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C24D8FB8-30FE-429F-A415-0F19E7633DFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8B01579-25D7-4420-9E5C-23058900CFB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8B01579-25D7-4420-9E5C-23058900CFB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8B01579-25D7-4420-9E5C-23058900CFB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8B01579-25D7-4420-9E5C-23058900CFB6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C24D8FB8-30FE-429F-A415-0F19E7633DFA} = {B1105690-41B6-4A18-81B4-C41611D8B112}
+		{E8B01579-25D7-4420-9E5C-23058900CFB6} = {B1105690-41B6-4A18-81B4-C41611D8B112}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D336D29-C2C7-49AA-83E5-E2AC083B15FF}
+	EndGlobalSection
+EndGlobal
