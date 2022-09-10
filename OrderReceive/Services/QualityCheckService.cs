@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using OrderReceive.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,36 +6,73 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Warehouse_Backend.Grpc;
 
 namespace OrderReceive.Services
 {
-    public class QualityCheckService : IQualityCheckService
+    public class QualityCheckService //: IQualityCheckService
     {
-        private readonly IConfiguration configuration;
-        private readonly HttpClient httpClient;
-        public QualityCheckService(HttpClient httpClient, IConfiguration configuration)
+        //private readonly IConfiguration configuration;
+        //private readonly HttpClient httpClient;
+        //public QualityCheckService(HttpClient httpClient, IConfiguration configuration)
+        //{
+        //    this.configuration = configuration;
+        //    this.httpClient = httpClient;
+        //}
+
+        //public async Task<bool> PostQualityCheckData(string orderCode, List<QualityCheck> qcList)
+        //{
+        //    var dataAsString = JsonSerializer.Serialize(qcList);
+        //    var content = new StringContent(dataAsString);
+        //    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        //    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        //    var response = await httpClient.PostAsync($"api/QualityCheck/{orderCode}", content);
+
+        //    if (!response.IsSuccessStatusCode)
+        //        throw new ApplicationException($"Something went wrong calling the API: {response.ReasonPhrase}");
+
+        //    return JsonSerializer.Deserialize<bool>("true", new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        //    //var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+        //    //return JsonSerializer.Deserialize<bool>(responseString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        //}
+
+
+        //==================================using GRPC ===========================================
+
+        private readonly QCGrpc.QCGrpcClient qCGrpcClient;
+
+        public QualityCheckService(QCGrpc.QCGrpcClient qCGrpcClient)
         {
-            this.configuration = configuration;
-            this.httpClient = httpClient;
+            this.qCGrpcClient = qCGrpcClient;
         }
 
-        public async Task<bool> PostQualityCheckData(string orderCode, List<QualityCheck> qcList)
+        public async Task<bool> PostQualityCheckData(string orderCode, List<QualityCheckForCreation> qcList)
         {
-            var dataAsString = JsonSerializer.Serialize(qcList);
-            var content = new StringContent(dataAsString);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            try
+            {
+                QualityCheckRequest qualityCheckRequest = new QualityCheckRequest { Ordercode = orderCode };
+                foreach (var qcItem in qcList)
+                {
+                    qualityCheckRequest.QualityCheck.Add(qcItem);
+                }
 
-            var response = await httpClient.PostAsync($"api/QualityCheck/{orderCode}", content);
+                QualityCheckResponse qualityCheckResponse = await qCGrpcClient.CreateQCRecordsAsync(qualityCheckRequest);
 
-            if (!response.IsSuccessStatusCode)
-                throw new ApplicationException($"Something went wrong calling the API: {response.ReasonPhrase}");
+                if (qualityCheckResponse.QualityCheck.Count > 0)
+                    return true;
+                else
+                    return false;
 
-            return JsonSerializer.Deserialize<bool>("true", new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-            //var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            //return JsonSerializer.Deserialize<bool>(responseString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
         }
     }

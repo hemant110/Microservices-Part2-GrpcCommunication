@@ -11,17 +11,18 @@ using OrderReceive.Repositories;
 using OrderReceive.Services;
 using System;
 using System.Linq;
+using Warehouse_Backend.Grpc;
 
 namespace OrderReceive
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {   
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -38,8 +39,10 @@ namespace OrderReceive
             services.AddScoped<IOrderHeaderRepository, OrderHeaderRepository>();
             services.AddScoped<IOrderLinesRepository, OrderLineRepository>();
 
-            services.AddHttpClient<IQualityCheckService, QualityCheckService>(c =>
-                c.BaseAddress = new Uri(Configuration["ApiConfigs:QualityCheck:Uri"]));
+            //services.AddHttpClient<IQualityCheckService, QualityCheckService>(c =>
+            //    c.BaseAddress = new Uri(Configuration["ApiConfigs:QualityCheck:Uri"]));
+
+            services.AddGrpcClient<QCGrpc.QCGrpcClient>(c => c.Address = new Uri(Configuration["ApiConfigs:QualityCheck:Uri"]));
 
             services.AddDbContext<OrderReceiveDbContext>(options =>
             {

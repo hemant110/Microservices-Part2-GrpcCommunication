@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option csharp_namespace = "Warehouse_Backend.Grpc";
+
+package API;
+
+service QCGrpc {
+	rpc CreateQCRecords	(QualityCheckRequest) returns (QualityCheckResponse) {}
+}
+
+message QualityCheckRequest{
+    string ordercode =1;
+    repeated QualityCheckForCreation qualityCheck= 2;
+}
+
+message QualityCheckResponse{
+	repeated QualityCheck qualityCheck= 1;
+}
+
+message QualityCheck {
+         string QualityCheckId =1 ;
+         string Product_Code =2 ;
+         string QC_Tag       =3 ;
+         string QC_List      =4 ;
+         string QC_ListDate  =5 ;
+         string QC_ListTime  =6 ;
+         string QC_By        =7 ;
+         string QC_Status    =8 ;
+         string QC_Notes     =9 ;
+         string QC_Action    =10;
+}
+
+message QualityCheckForCreation {
+        string QualityCheckId     =1 ;
+        string Product_Code     =2 ;
+        string QC_Tag           =3 ;
+        string QC_List          =4 ;
+        string QC_ListDate      =5 ;
+        string QC_ListTime      =6 ;
+        bool Active             =7 ;
+        bool IsDeleted          =8 ;
+        string Customer_Code    =9 ;
+        string Customer_Name    =10;
+        string Warehouse_Code   =11;
+        string Warehouse_Name   =12;
+        string Company_Code     =13;
+        string Company_Name     =14;
+        string CreatedBy        =15;
+        string CreatedDate      =16;
+        string CreatedTime      =17;
+}

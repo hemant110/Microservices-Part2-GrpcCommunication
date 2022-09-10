@@ -90,7 +90,7 @@ namespace QCService.Controllers
         }
 
         [HttpPost("{orderCode}")]
-        public async Task<ActionResult<QualityCheck>> Post(string orderCode, [FromBody] List<QualityCheckForCreation> qualityCheckForInsert)
+        public async Task<ActionResult<List<QualityCheck>>> Post(string orderCode, [FromBody] List<QualityCheckForCreation> qualityCheckForInsert)
         {
             try
             {
