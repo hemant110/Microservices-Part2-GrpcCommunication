@@ -1,5 +1,6 @@
 # Microservices-Part2-GrpcCommunication
-Microservices Part2 - Microservice example with synchronous communication between services using GRPC
+Microservices Part2 - This is the second part of microservice series, example with synchronous communication between services using GRPC
+
 This application contains 2 API which communicates with each other synchronously by using Grpc.
 
 Grpc refers to Google remote procedure calls, which uses proto files to describe and identify the service methods.
